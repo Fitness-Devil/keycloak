@@ -1,0 +1,471 @@
+/* Fitness Devil - Custom Keycloak Theme - Matching Landing Page */
+
+/* Import modern font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+/* Root variables - Matching Landing Page */
+:root {
+  --primary-orange: #ea580c;
+  --primary-red: #dc2626;
+  --orange-50: #fff7ed;
+  --orange-100: #ffedd5;
+  --red-50: #fef2f2;
+  --zinc-50: #fafafa;
+  --zinc-100: #f4f4f5;
+  --zinc-900: #18181b;
+  --zinc-950: #09090b;
+  --card-bg: #ffffff;
+  --text-primary: #18181b;
+  --text-secondary: #71717a;
+  --border-color: #e4e4e7;
+  --input-border: #d4d4d8;
+  --input-focus: #ea580c;
+  --error-color: #dc2626;
+  --success-color: #16a34a;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --zinc-50: #18181b;
+    --orange-50: #1c1917;
+    --red-50: #1c1917;
+    --card-bg: #27272a;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
+    --border-color: #3f3f46;
+    --input-border: #52525b;
+  }
+}
+
+/* Body and container - Matching Landing Page Gradient */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, var(--zinc-50) 0%, var(--orange-50) 50%, var(--red-50) 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(135deg, var(--zinc-950) 0%, var(--zinc-900) 50%, var(--zinc-950) 100%);
+  }
+}
+
+/* Main container */
+.login-pf-page {
+  background: transparent;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+#kc-container-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+/* Header/Logo - Matching Landing Page */
+#kc-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+#kc-header-wrapper {
+  background: none;
+  padding: 2rem 0 0 0;
+  text-align: center;
+}
+
+#kc-logo {
+  display: none;
+}
+
+#kc-logo-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* FD Logo Box - Matching Landing Page */
+#kc-logo-wrapper::before {
+  content: "FD";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-red) 100%);
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 800;
+  box-shadow: var(--shadow-xl);
+  letter-spacing: -0.5px;
+}
+
+/* Page Title - Matching Landing Page */
+#kc-page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #ea580c 0%, #dc2626 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+/* Subtitle */
+.subtitle,
+#kc-content-wrapper > p {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Card - Matching Landing Page with hover effect */
+#kc-content,
+#kc-form,
+.login-pf-page .card-pf {
+  background: var(--card-bg);
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  padding: 3rem;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+  transition: all 0.3s ease;
+}
+
+#kc-content:hover,
+#kc-form:hover,
+.login-pf-page .card-pf:hover {
+  border-color: rgba(234, 88, 12, 0.2);
+  box-shadow: var(--shadow-xl);
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* Labels */
+label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* Input fields */
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.form-control:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.1);
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Buttons - Matching Landing Page */
+#kc-login,
+.btn-primary,
+button[type="submit"] {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, var(--primary-orange) 0%, var(--primary-red) 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 0.5rem;
+  box-shadow: var(--shadow-lg);
+  letter-spacing: -0.01em;
+}
+
+#kc-login:hover,
+.btn-primary:hover,
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-xl), 0 0 0 1px rgba(234, 88, 12, 0.1);
+}
+
+#kc-login:active,
+.btn-primary:active,
+button[type="submit"]:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-md);
+}
+
+#kc-login:focus,
+.btn-primary:focus,
+button[type="submit"]:focus {
+  outline: none;
+  box-shadow: var(--shadow-lg), 0 0 0 3px rgba(234, 88, 12, 0.2);
+}
+
+.btn-default {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.btn-default:hover {
+  background: var(--border-color);
+}
+
+/* Links */
+a {
+  color: var(--primary-orange);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-red);
+  text-decoration: underline;
+}
+
+#kc-registration {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+#kc-registration span {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Remember me checkbox */
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.checkbox label {
+  margin: 0 0 0 0.5rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--primary-orange);
+}
+
+/* Forgot password */
+#kc-form-options {
+  margin-top: 1rem;
+  text-align: right;
+}
+
+#kc-form-options a {
+  font-size: 0.875rem;
+}
+
+/* Alerts */
+.alert {
+  padding: 0.875rem 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+}
+
+.alert-error,
+.pf-m-danger {
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--error-color);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.alert-success,
+.pf-m-success {
+  background: rgba(22, 163, 74, 0.1);
+  color: var(--success-color);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+
+.alert-warning {
+  background: rgba(234, 88, 12, 0.1);
+  color: var(--primary-orange);
+  border: 1px solid rgba(234, 88, 12, 0.2);
+}
+
+.alert-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Social providers */
+#kc-social-providers {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+
+#kc-social-providers ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+#kc-social-providers li {
+  margin: 0;
+}
+
+#kc-social-providers a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+#kc-social-providers a:hover {
+  background: var(--border-color);
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Loading state */
+#kc-login[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  #kc-content,
+  #kc-form,
+  .login-pf-page .card-pf {
+    padding: 2rem 1.5rem;
+  }
+
+  #kc-page-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Registration page specific */
+#kc-register-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+/* Info messages */
+#kc-info-message {
+  background: rgba(59, 130, 246, 0.1);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+#kc-info-message p {
+  margin: 0;
+  color: #3b82f6;
+  font-size: 0.875rem;
+}
+
+/* Terms and conditions */
+#kc-terms-text {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 1rem;
+  background: var(--background-start);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Divider */
+.kc-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.kc-divider::before,
+.kc-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.kc-divider span {
+  padding: 0 1rem;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Additional polish */
+* {
+  box-sizing: border-box;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px var(--card-bg) inset;
+  -webkit-text-fill-color: var(--text-primary);
+  transition: background-color 5000s ease-in-out 0s;
+}
