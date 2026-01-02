@@ -12,6 +12,7 @@ USER keycloak
 # Build Keycloak (optimized for production, with PostgreSQL driver and enabled metrics/health)
 RUN /opt/keycloak/bin/kc.sh build \
     --db=postgres \
+    --http-relative-path=/auth \
     --health-enabled=true \
     --metrics-enabled=true
 
