@@ -9,8 +9,8 @@ USER root
 RUN chown -R keycloak:keycloak /opt/keycloak/themes/fitness-devil
 USER keycloak
 
-# Build Keycloak (optimized for production)
-RUN /opt/keycloak/bin/kc.sh build
+# Build Keycloak (optimized for production, with PostgreSQL driver)
+RUN /opt/keycloak/bin/kc.sh build --db=postgres
 
 # Set default command
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]

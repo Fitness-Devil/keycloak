@@ -1,0 +1,83 @@
+replicaCount: 1
+
+image:
+  repository: fitnessdevil.azurecr.io/fitnessdevil/keycloak
+  tag: "latest"
+  pullPolicy: Always
+
+service:
+  type: ClusterIP
+  port: 8080
+
+serviceAccount:
+  create: false
+  automount: false
+  annotations: {}
+  name: ""
+
+imagePullSecrets:
+  - name: acr-pull
+
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+
+livenessProbe:
+  httpGet:
+    path: /health/live
+    port: http
+  initialDelaySeconds: 60
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /health/ready
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 5
+
+extraEnv:
+  - name: KC_LOG_LEVEL
+    value: DEBUG
+  - name: KC_LOG_CONSOLE_COLOR
+    value: "true"
+
+env:
+  KC_HOSTNAME_STRICT: "false"
+  KC_HTTP_ENABLED: "true"
+  KC_HEALTH_ENABLED: "true"
+  KC_METRICS_ENABLED: "true"
+  KEYCLOAK_ADMIN: "admin"
+  KEYCLOAK_ADMIN_PASSWORD: "admin"
+
+# PostgreSQL connection
+database:
+  enabled: true
+  host: "fitnessdevil-db.postgres.database.azure.com"
+  port: "5432"
+  name: "fitnessdevil_keycloak"
+  username: "fitnessdevil@fitnessdevil-db"
+  # Password from secret
+  existingSecret: "keycloak-db-secret"
+  existingSecretKey: "password"
+
+# Realm import
+realmImport:
+  enabled: true
+  existingConfigMap: "keycloak-realm"
+
+# PostgreSQL subchart
+postgresql:
+  enabled: true
+  auth:
+    username: keycloak
+    password: keycloak
+    database: keycloak
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
