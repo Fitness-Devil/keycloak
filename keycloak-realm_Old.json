@@ -1,0 +1,243 @@
+{
+  "realm": "fitnessdevil",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "accessTokenLifespan": 3600,
+  "refreshTokenMaxReuse": 0,
+
+  "roles": {
+    "realm": [
+      {
+        "name": "User",
+        "description": "Standard user role"
+      },
+      {
+        "name": "Admin",
+        "description": "Administrator role"
+      }
+    ]
+  },
+
+  "clients": [
+    {
+      "clientId": "fitnessdevil-frontend",
+      "name": "FitnessDevil Frontend",
+      "description": "Next.js / Web UI",
+      "enabled": true,
+      "publicClient": true,
+      "bearerOnly": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "protocol": "openid-connect",
+      "redirectUris": [
+        "http://localhost:3000/*",
+        "http://localhost:8081/*"
+      ],
+      "webOrigins": [
+        "http://localhost:3000",
+        "http://localhost:8081",
+        "+"
+      ],
+      "attributes": {
+        "access.token.lifespan": "3600",
+        "pkce.code.challenge.method": "S256"
+      },
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },
+
+    {
+      "clientId": "fitnessdevil-core-api",
+      "name": "FitnessDevil Core API",
+      "description": "Quarkus GraphQL backend - Resource Server",
+      "enabled": true,
+      "publicClient": false,
+      "bearerOnly": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "authorizationServicesEnabled": true,
+      "protocol": "openid-connect",
+      "secret": "secret",
+
+      "redirectUris": [
+        "http://localhost:8080/q/dev-ui/*",
+        "http://localhost:8080/q/dev-ui/quarkus-oidc/*",
+        "http://localhost:8080/*"
+      ],
+
+      "webOrigins": [
+        "http://localhost:8080",
+        "*"
+      ],
+
+      "attributes": {
+        "access.token.lifespan": "3600"
+      },
+
+      "authorizationSettings": {
+        "allowRemoteResourceManagement": true,
+        "policyEnforcementMode": "ENFORCING",
+
+        "resources": [
+          {
+            "name": "GraphQL Resource",
+            "type": "urn:fitnessdevil:resources:graphql",
+            "ownerManagedAccess": false,
+            "displayName": "GraphQL Endpoint",
+            "uris": ["/graphql"],
+            "scopes": [
+              { "name": "graphql:query" },
+              { "name": "graphql:mutation" }
+            ]
+          },
+          {
+            "name": "User Resource",
+            "type": "urn:fitnessdevil:resources:user",
+            "ownerManagedAccess": false,
+            "displayName": "User Management",
+            "scopes": [
+              { "name": "user:read" },
+              { "name": "user:write" },
+              { "name": "user:list" }
+            ]
+          }
+        ],
+
+        "policies": [
+          {
+            "name": "User Role Policy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "roles": "[{\"id\":\"User\",\"required\":true}]"
+            }
+          },
+          {
+            "name": "Admin Role Policy",
+            "type": "role",
+            "logic": "POSITIVE",
+            "decisionStrategy": "UNANIMOUS",
+            "config": {
+              "roles": "[{\"id\":\"Admin\",\"required\":true}]"
+            }
+          },
+          {
+            "name": "GraphQL Query Permission",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"graphql:query\"]",
+              "applyPolicies": "[\"User Role Policy\"]"
+            }
+          },
+          {
+            "name": "GraphQL Mutation Permission",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"graphql:mutation\"]",
+              "applyPolicies": "[\"User Role Policy\"]"
+            }
+          },
+          {
+            "name": "User List Permission",
+            "type": "scope",
+            "logic": "POSITIVE",
+            "decisionStrategy": "AFFIRMATIVE",
+            "config": {
+              "scopes": "[\"user:list\"]",
+              "applyPolicies": "[\"Admin Role Policy\"]"
+            }
+          }
+        ],
+
+        "scopes": [
+          { "name": "graphql:query" },
+          { "name": "graphql:mutation" },
+          { "name": "user:read" },
+          { "name": "user:write" },
+          { "name": "user:list" }
+        ]
+      }
+    }
+  ],
+
+  "users": [
+    {
+      "username": "test@fitnessdevil.com",
+      "email": "test@fitnessdevil.com",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Test",
+      "lastName": "User",
+      "credentials": [
+        { "type": "password", "value": "password123", "temporary": false }
+      ],
+      "realmRoles": ["User"]
+    },
+    {
+      "username": "admin@fitnessdevil.com",
+      "email": "admin@fitnessdevil.com",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Admin",
+      "lastName": "User",
+      "credentials": [
+        { "type": "password", "value": "admin123", "temporary": false }
+      ],
+      "realmRoles": ["User", "Admin"]
+    }
+  ],
+
+  "clientScopes": [
+    {
+      "name": "user-info",
+      "description": "User information scope",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "true"
+      },
+      "protocolMappers": [
+        {
+          "name": "user-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "id",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "userId",
+            "jsonType.label": "String"
+          }
+        }
+      ]
+    }
+  ]
+}
