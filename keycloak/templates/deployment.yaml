@@ -13,7 +13,6 @@ spec:
     metadata:
       labels:
         {{- include "keycloak.labels" . | nindent 8 }}
-        date: "{{ now | unixEpoch }}"
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -52,6 +51,9 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
+            - name: management
+              containerPort: {{ .Values.management.port }}
+              protocol: TCP
           env:
             {{- range $k, $v := .Values.env }}
             - name: {{ $k }}
@@ -61,7 +63,7 @@ spec:
             - name: KC_DB
               value: "postgres"
             - name: KC_DB_URL
-              value: "jdbc:postgresql://{{ .Values.database.host }}:{{ .Values.database.port }}/{{ .Values.database.name }}"
+              value: "jdbc:postgresql://{{ .Values.database.host }}:{{ .Values.database.port }}/{{ .Values.database.name }}?sslmode=require"
             - name: KC_DB_USERNAME
               value: {{ .Values.database.username | quote }}
             - name: KC_DB_PASSWORD

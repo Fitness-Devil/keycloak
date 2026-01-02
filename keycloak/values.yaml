@@ -9,6 +9,9 @@ service:
   type: ClusterIP
   port: 8080
 
+management:
+  port: 9000
+
 serviceAccount:
   create: false
   automount: false
@@ -29,15 +32,15 @@ resources:
 livenessProbe:
   httpGet:
     path: /health/live
-    port: http
-  initialDelaySeconds: 60
+    port: management
+  initialDelaySeconds: 120
   periodSeconds: 10
 
 readinessProbe:
   httpGet:
     path: /health/ready
-    port: http
-  initialDelaySeconds: 30
+    port: management
+  initialDelaySeconds: 60
   periodSeconds: 5
 
 extraEnv:
@@ -47,9 +50,12 @@ extraEnv:
     value: "true"
 
 env:
-  KC_HOSTNAME_STRICT: "false"
+  KC_PROXY: "edge"
+  KC_HOSTNAME: "fitnessdevil-rso.italynorth.cloudapp.azure.com"
+  KC_PROXY_HEADERS: "xforwarded"
+  KC_HOSTNAME_STRICT: "true"
+  KC_HOSTNAME_PATH: "/auth"
   KC_HTTP_ENABLED: "true"
-  KC_HEALTH_ENABLED: "true"
   KC_METRICS_ENABLED: "true"
   KEYCLOAK_ADMIN: "admin"
   KEYCLOAK_ADMIN_PASSWORD: "admin"
@@ -60,10 +66,10 @@ database:
   host: "fitnessdevil-db.postgres.database.azure.com"
   port: "5432"
   name: "fitnessdevil_keycloak"
-  username: "fitnessdevil@fitnessdevil-db"
+  username: "fitnessdevil"
   # Password from secret
-  existingSecret: "keycloak-db-secret"
-  existingSecretKey: "password"
+  existingSecret: "core-api-secrets"
+  existingSecretKey: "DB_PASSWORD"
 
 # Realm import
 realmImport:
