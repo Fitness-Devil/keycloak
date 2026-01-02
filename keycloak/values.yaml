@@ -21,43 +21,15 @@ serviceAccount:
 imagePullSecrets:
   - name: acr-pull
 
-fitnessdevil-core:
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "750m"
-      memory: "1Gi"
-
-keycloak:
-  resources:
-    requests:
-      cpu: "250m"
-      memory: "512Mi"
-    limits:
-      cpu: "750m"
-      memory: "1Gi"
-
-frontend:
-  resources:
-    requests:
-      cpu: "100m"
-      memory: "256Mi"
-    limits:
-      cpu: "300m"
-      memory: "512Mi"
-
 livenessProbe:
   httpGet:
-    path: /health/live
+    path: /auth/health/live
     port: management
   initialDelaySeconds: 120
   periodSeconds: 10
-
-readinessProbe:
+  readinessProbe:
   httpGet:
-    path: /health/ready
+    path: /auth/health/ready
     port: management
   initialDelaySeconds: 60
   periodSeconds: 5
@@ -67,18 +39,6 @@ extraEnv:
     value: DEBUG
   - name: KC_LOG_CONSOLE_COLOR
     value: "true"
-
-env:
-  KC_PROXY: "edge"
-  KC_HOSTNAME: "fitnessdevil-rso.italynorth.cloudapp.azure.com"
-  KC_HTTP_RELATIVE_PATH: "/auth"
-  KC_PROXY_HEADERS: "xforwarded"
-  KC_HOSTNAME_STRICT: "true"
-  KC_HOSTNAME_PATH: "/auth"
-  KC_HTTP_ENABLED: "true"
-  KC_METRICS_ENABLED: "true"
-  KEYCLOAK_ADMIN: "admin"
-  KEYCLOAK_ADMIN_PASSWORD: "admin"
 
 # PostgreSQL connection
 database:
@@ -95,9 +55,3 @@ database:
 realmImport:
   enabled: true
   existingConfigMap: "keycloak-realm"
-
-postgresql:
-  enabled: false
-
-nutri-service:
-  enabled: false
