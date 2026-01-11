@@ -162,6 +162,11 @@
           "temporary": false
         }
       ],
+      "attributes": {
+        "workout_role": [
+          "TRAINEE"
+        ]
+      },
       "realmRoles": [
         "User"
       ]
@@ -180,9 +185,37 @@
           "temporary": false
         }
       ],
+      "attributes": {
+        "workout_role": [
+          "TRAINEE"
+        ]
+      },
       "realmRoles": [
         "User",
         "Admin"
+      ]
+    },
+    {
+      "username": "trainer@fitnessdevil.com",
+      "email": "trainer@fitnessdevil.com",
+      "emailVerified": true,
+      "enabled": true,
+      "firstName": "Trainer",
+      "lastName": "User",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "trainer123",
+          "temporary": false
+        }
+      ],
+      "attributes": {
+        "workout_role": [
+          "TRAINER"
+        ]
+      },
+      "realmRoles": [
+        "User"
       ]
     },
     {
@@ -200,6 +233,11 @@
           "temporary": false
         }
       ],
+      "attributes": {
+        "workout_role": [
+          "TRAINEE"
+        ]
+      },
       "realmRoles": [
         "User"
       ]
@@ -219,6 +257,11 @@
           "temporary": false
         }
       ],
+      "attributes": {
+        "workout_role": [
+          "TRAINEE"
+        ]
+      },
       "realmRoles": [
         "User"
       ]
@@ -238,6 +281,11 @@
           "temporary": false
         }
       ],
+      "attributes": {
+        "workout_role": [
+          "TRAINEE"
+        ]
+      },
       "realmRoles": [
         "User"
       ]
@@ -271,6 +319,19 @@
             "id.token.claim": "true",
             "access.token.claim": "true",
             "claim.name": "userId",
+            "jsonType.label": "String"
+          }
+        },
+        {
+          "name": "workout-role",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "config": {
+            "userinfo.token.claim": "true",
+            "user.attribute": "workout_role",
+            "id.token.claim": "true",
+            "access.token.claim": "true",
+            "claim.name": "workoutRole",
             "jsonType.label": "String"
           }
         }
